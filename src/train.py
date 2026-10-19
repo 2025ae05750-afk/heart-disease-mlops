@@ -196,16 +196,20 @@ def main():
         # Select by test ROC-AUC only as an assignment demonstration.
         # In a real production project, model selection should be based on CV/validation data
         # rather than repeatedly optimizing against a held-out test set.
+        # Select on cross-validated ROC-AUC (training data only). The held-out test
+        # set is used once, afterwards, to report the final unbiased estimate.
         final_name = comparison.iloc[0]["model"]
         final_model = model_results[final_name]
 
         joblib.dump(final_model, MODEL_PATH)
         mlflow.log_param("selected_model", final_name)
+        mlflow.log_param("selection_criterion", "best_cv_roc_auc")   # added
         mlflow.log_artifact(str(MODEL_PATH))
 
         final_metrics = {
             "selected_model": final_name,
-            "selection_note": "Assignment implementation selects the strongest held-out ROC-AUC; production practice should use a validation set and reserve the test set for final confirmation.",
+            "selection_criterion": "best_cv_roc_auc (5-fold stratified CV on the training split)",
+            "selection_note": "Model chosen on cross-validated ROC-AUC; the test set was not used for selection and is reported as the final held-out estimate.",
             "results": comparison_rows,
         }
         (METRICS_DIR / "final_metrics.json").write_text(

@@ -1,6 +1,7 @@
 {
   "selected_model": "logistic_regression",
-  "selection_note": "Assignment implementation selects the strongest held-out ROC-AUC; production practice should use a validation set and reserve the test set for final confirmation.",
+  "selection_criterion": "best_cv_roc_auc (5-fold stratified CV on the training split)",
+  "selection_note": "Model chosen on cross-validated ROC-AUC; the test set was not used for selection and is reported as the final held-out estimate.",
   "results": [
     {
       "model": "logistic_regression",
