@@ -1,0 +1,40 @@
+services:
+  api:
+    build: .
+    image: heart-disease-mlops:latest
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  mlflow:
+    image: python:3.11-slim
+    working_dir: /mlflow
+    volumes:
+      - ./mlruns:/mlflow/mlruns
+    command: >
+      sh -c "pip install --no-cache-dir mlflow==2.17.2 &&
+             mlflow ui --host 0.0.0.0 --port 5000
+             --backend-store-uri file:/mlflow/mlruns"
+    ports:
+      - "5000:5000"
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - api
+
+  grafana:
+    image: grafana/grafana:11.3.1
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
