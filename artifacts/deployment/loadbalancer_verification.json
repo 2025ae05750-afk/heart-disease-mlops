@@ -1,0 +1,24 @@
+{
+  "timestamp_utc": "2026-10-19T20:28:28.918762+00:00",
+  "deployment": {
+    "service": "heart-api",
+    "namespace": "heart-mlops",
+    "type": "LoadBalancer",
+    "external_ips": [
+      "127.0.0.1"
+    ],
+    "ports": [
+      {
+        "nodePort": 30120,
+        "port": 80,
+        "protocol": "TCP",
+        "targetPort": 8000
+      }
+    ]
+  },
+  "tests": {
+    "docs_http_status": 200,
+    "openapi_http_status": 200,
+    "loadbalancer_configured": true
+  }
+}
