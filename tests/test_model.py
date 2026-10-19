@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
-from sklearn.pipeline import Pipeline
+
+from src.config import CATEGORICAL_FEATURES, FEATURES, NUMERIC_FEATURES
 from src.train import build_preprocessor
-from src.config import FEATURES, NUMERIC_FEATURES, CATEGORICAL_FEATURES
+
 
 def test_preprocessor_fits_and_transforms():
     rows = []

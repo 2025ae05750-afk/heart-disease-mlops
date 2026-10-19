@@ -1,8 +1,10 @@
 from pathlib import Path
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from .config import DATA_PATH, PROCESSED_PATH, RANDOM_STATE, TEST_SIZE, FEATURES, TARGET
+from .config import DATA_PATH, FEATURES, PROCESSED_PATH, RANDOM_STATE, TARGET, TEST_SIZE
+
 
 def load_raw_data(path: Path = DATA_PATH) -> pd.DataFrame:
     if not path.exists():

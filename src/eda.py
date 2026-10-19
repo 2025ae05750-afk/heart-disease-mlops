@@ -1,9 +1,11 @@
 import json
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from .config import DATA_PATH, PLOTS_DIR, METRICS_DIR, NUMERIC_FEATURES, TARGET
-from .data import load_raw_data, clean_data
+from .config import METRICS_DIR, NUMERIC_FEATURES, PLOTS_DIR, TARGET
+from .data import clean_data, load_raw_data
+
 
 def main():
     PLOTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -51,7 +53,7 @@ def main():
     plt.close(fig)
 
     summary = {
-        "rows": int(len(df)),
+        "rows": len(df),
         "columns_including_target": int(df.shape[1]),
         "missing_values_by_column": df.isna().sum().to_dict(),
         "class_counts": {str(k): int(v) for k, v in df[TARGET].value_counts().sort_index().items()},

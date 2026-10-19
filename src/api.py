@@ -1,15 +1,14 @@
 import logging
 import time
 from pathlib import Path
-from typing import Any
 
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException, Request
-from pydantic import BaseModel, Field
 from prometheus_fastapi_instrumentator import Instrumentator
+from pydantic import BaseModel, Field
 
-from .config import MODEL_PATH, FEATURES
+from .config import FEATURES, MODEL_PATH
 
 logging.basicConfig(
     level=logging.INFO,

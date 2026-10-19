@@ -1,6 +1,8 @@
 import pandas as pd
-from src.data import clean_data
+
 from src.config import FEATURES, TARGET
+from src.data import clean_data
+
 
 def test_clean_data_converts_target_and_preserves_features():
     data = {c: [1, 2, 3] for c in FEATURES}

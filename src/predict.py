@@ -1,9 +1,11 @@
 import argparse
 import json
+
 import joblib
 import pandas as pd
 
-from .config import MODEL_PATH, FEATURES
+from .config import FEATURES, MODEL_PATH
+
 
 def predict_one(payload: dict):
     missing = [f for f in FEATURES if f not in payload]

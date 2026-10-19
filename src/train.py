@@ -3,28 +3,41 @@ import os
 from pathlib import Path
 
 import joblib
+import matplotlib.pyplot as plt
 import mlflow
 import mlflow.sklearn
-import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
-    accuracy_score, precision_score, recall_score, roc_auc_score,
-    classification_report, confusion_matrix, RocCurveDisplay
+    RocCurveDisplay,
+    accuracy_score,
+    classification_report,
+    confusion_matrix,
+    precision_score,
+    recall_score,
+    roc_auc_score,
 )
 from sklearn.model_selection import GridSearchCV, StratifiedKFold, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from .config import (
-    DATA_PATH, ARTIFACT_DIR, PLOTS_DIR, METRICS_DIR, MODEL_PATH,
-    NUMERIC_FEATURES, CATEGORICAL_FEATURES, FEATURES, TARGET,
-    RANDOM_STATE, TEST_SIZE, CV_FOLDS
+    ARTIFACT_DIR,
+    CATEGORICAL_FEATURES,
+    CV_FOLDS,
+    FEATURES,
+    METRICS_DIR,
+    MODEL_PATH,
+    NUMERIC_FEATURES,
+    PLOTS_DIR,
+    RANDOM_STATE,
+    TARGET,
+    TEST_SIZE,
 )
-from .data import load_raw_data, clean_data, save_clean_data
+from .data import clean_data, load_raw_data, save_clean_data
 
 EXPERIMENT_NAME = "Heart-Disease-MLOps-Assignment-01"
 
@@ -105,7 +118,7 @@ def main():
     model_results = {}
     comparison_rows = []
 
-    with mlflow.start_run(run_name="assignment_01_model_comparison") as parent_run:
+    with mlflow.start_run(run_name="assignment_01_model_comparison"):
         mlflow.log_params({
             "random_state": RANDOM_STATE,
             "test_size": TEST_SIZE,
